@@ -44,11 +44,15 @@ function App() {
     run();
   };
 
+  const copy = () => {
+    navigator.clipboard.writeText(pass);
+  };
+
   return (
     <>
       <div className="">Password Genrator</div>
       <div>{pass}</div>
-      <button>Copy</button>
+      <button onClick={copy}>Copy</button>
 
       <input
         type="range"
@@ -95,6 +99,8 @@ function App() {
         />{" "}
         ABC
       </label>
+
+      <button onClick={run}>Generate</button>
     </>
   );
 }
