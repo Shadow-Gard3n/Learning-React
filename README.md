@@ -14,8 +14,7 @@ A simple calculator built with React using state and basic event handlers.
 ## 🔐 2. Password Generator  
 A React-based tool that creates random passwords with customizable length and character types.
 
-> 🔧 *Coming soon...*
-
+![Password Generator](https://github.com/user-attachments/assets/39588864-a2d2-4cb8-a681-16dbef5c59d9)
 
 ---
 
