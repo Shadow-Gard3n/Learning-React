@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [pass, setPass] = useState("");
@@ -8,13 +8,13 @@ function App() {
   const [isUpperTrue, setUpperTrue] = useState(false);
   // const [isLowerTrue, setLowerTrue] = useState(true);
 
-  let createpass = "";
   const lower = "abcdefghijklmnopqrstuvwxyz";
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const num = "1234567890";
   const symbol = "!@#$%^&*()_-=+[]{}:;'/?.>,<|";
 
-  const run = () => {
+  const generate = () => {
+    let createpass = "";
     let all = lower;
     if (isUpperTrue) all += upper;
     if (isNumTrue) all += num;
@@ -26,27 +26,14 @@ function App() {
     setPass(createpass);
   };
 
-  const lenChange = (e) => {
-    setLen(Number(e.target.value));
-    run();
-  };
-
-  const numChange = (e) => {
-    setNumTrue(e.target.checked);
-    run();
-  };
-  const upperChange = (e) => {
-    setUpperTrue(e.target.checked);
-    run();
-  };
-  const symChange = (e) => {
-    setSymTrue(e.target.checked);
-    run();
-  };
-
   const copy = () => {
     navigator.clipboard.writeText(pass);
+    alert("Copied");
   };
+
+  useEffect(() => {
+    generate();
+  }, [len, isNumTrue, isSymTrue, isUpperTrue]);
 
   return (
     <>
@@ -60,7 +47,9 @@ function App() {
         max="20"
         step="1"
         value={len}
-        onChange={lenChange}
+        onChange={(e) => {
+          setLen(Number(e.target.value));
+        }}
       />
 
       <div>Length: {len}</div>
@@ -70,8 +59,9 @@ function App() {
         <input
           type="checkbox"
           name="number"
-          value="number"
-          onChange={numChange}
+          onChange={(e) => {
+            setNumTrue(e.target.checked);
+          }}
           checked={isNumTrue}
         />{" "}
         123
@@ -80,27 +70,29 @@ function App() {
         <input
           type="checkbox"
           name="symbols"
-          value="symbols"
-          onChange={symChange}
+          onChange={(e) => {
+            setSymTrue(e.target.checked);
+          }}
           checked={isSymTrue}
         />{" "}
         #$&
       </label>
       <label>
-        <input type="checkbox" name="lowercase" value="lowercase" checked /> abc
+        <input type="checkbox" name="lowercase" checked /> abc
       </label>
       <label>
         <input
           type="checkbox"
           name="uppercase"
-          value="uppercase"
-          onChange={upperChange}
+          onChange={(e) => {
+            setUpperTrue(e.target.checked);
+          }}
           checked={isUpperTrue}
         />{" "}
         ABC
       </label>
 
-      <button onClick={run}>Generate</button>
+      <button onClick={generate}>Generate</button>
     </>
   );
 }
