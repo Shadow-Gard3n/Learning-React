@@ -17,7 +17,12 @@ A React-based tool that creates random passwords with customizable length and ch
 ![Password Generator](https://github.com/user-attachments/assets/39588864-a2d2-4cb8-a681-16dbef5c59d9)
 
 ---
+## 🌦️ 3. Weather App
+A React-based tool to tell the weather of a specific place using [Weather API](https://www.weatherapi.com/docs).
 
+![Weather App](https://github.com/user-attachments/assets/43b60a39-0613-4802-b4ea-abb5ca1fd428)
+
+---
 ## 📁 Folder Structure
 
 Each project is inside its own folder:
