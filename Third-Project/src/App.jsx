@@ -10,16 +10,35 @@ function App() {
   const [pressureUnit, setPressureUnit] = useState("mb");
   const [precipUnit, setPrecipUnit] = useState("mm");
 
-  const apiKey = "550d36304f7048ecb9e54320250906";
+  const apiKey = import.meta.env.VITE_API_URL;
   const fetch_curr_weather = async () => {
-    const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=yes`
-    );
-    if (!response.ok) {
-      throw new Error("City not found");
+    try {
+      const response = await fetch(
+        `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=yes`
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data && data.error) {
+          const code = data.error.code;
+          if (code === 1003) {
+            throw new Error(
+              "City parameter is missing. Please enter a city name."
+            );
+          } else if (code === 1006) {
+            throw new Error("No location found matching your city name.");
+          } else {
+            throw new Error("Internal server error. Please try again later.");
+          }
+        } else {
+          throw new Error("Unexpected error occurred.");
+        }
+      }
+
+      setCurrent_Weather(data);
+    } catch (err) {
+      alert(err.message);
     }
-    const data = await response.json();
-    setCurrent_Weather(data);
   };
 
   const airQuality = {
